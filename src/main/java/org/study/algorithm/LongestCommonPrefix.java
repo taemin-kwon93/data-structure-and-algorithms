@@ -38,7 +38,7 @@ public class LongestCommonPrefix {
         String prefix = strs[0];
 
         for(String str : strs) {
-            while(prefix.length() > 0 && !str.startsWith(prefix)) {
+            while(!prefix.isEmpty() && !str.startsWith(prefix)) {
                 prefix = prefix.substring(0, prefix.length() - 1);
             }
         }
