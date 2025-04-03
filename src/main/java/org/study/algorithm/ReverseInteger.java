@@ -16,33 +16,22 @@ public class ReverseInteger {
     }
 
     public int reverse2(int x) {
-        int rev = 0;
-        while (x != 0) {
-            int pop = x % 10;   // pop the last digit
-            x /= 10;            // remove the last digit from x
+        boolean isNegative = x < 0;
+        if (isNegative) x = -x;
 
-            // Check for overflow: if rev * 10 + pop overflows 32-bit int
-            // 1) For positive overflow check:
-            //    if rev > Integer.MAX_VALUE / 10
-            //    or (rev == Integer.MAX_VALUE / 10 && pop > 7)
-            //    => return 0
-            if (rev > Integer.MAX_VALUE / 10
-                    || (rev == Integer.MAX_VALUE / 10 && pop > 7)) {
+        int s = 0;
+        int r;
+        while (x > 0) {
+            r = x % 10;
+            x = x / 10;
+
+            if (s > Integer.MAX_VALUE / 10 || (s == Integer.MAX_VALUE / 10 && r > 7)) {
                 return 0;
             }
 
-            // 2) For negative overflow check:
-            //    if rev < Integer.MIN_VALUE / 10
-            //    or (rev == Integer.MIN_VALUE / 10 && pop < -8)
-            //    => return 0
-            if (rev < Integer.MIN_VALUE / 10
-                    || (rev == Integer.MIN_VALUE / 10 && pop < -8)) {
-                return 0;
-            }
-
-            // push
-            rev = rev * 10 + pop;
+            s = s * 10 + r;
         }
-        return rev;
+
+        return isNegative ? s * - 1 : s;
     }
 }
