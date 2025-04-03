@@ -24,14 +24,11 @@ public class ReverseInteger {
         while (x > 0) {
             r = x % 10;
             x = x / 10;
-
-            if (s > Integer.MAX_VALUE / 10 || (s == Integer.MAX_VALUE / 10 && r > 7)) {
+            if (s > Integer.MAX_VALUE / 10 || (s == Integer.MAX_VALUE / 10 && r > 7))
                 return 0;
-            }
-
             s = s * 10 + r;
         }
 
-        return isNegative ? s * - 1 : s;
+        return isNegative ? -s : s;
     }
 }
