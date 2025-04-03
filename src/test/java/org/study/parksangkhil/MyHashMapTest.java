@@ -1,20 +1,13 @@
 package org.study.parksangkhil;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class MyHashMapTest {
-    private MyHashMap map;
-
-    @BeforeEach
-    void setUp() {
-        map = new MyHashMap();
-    }
-
     @Test
     public void testPutAndGet() {
+        MyHashMap map = new MyHashMap();
         map.put(1, 10);
         map.put(2, 20);
         map.put(3, 30);
@@ -27,6 +20,7 @@ class MyHashMapTest {
 
     @Test
     public void testUpdateValue() {
+        MyHashMap map = new MyHashMap();
         map.put(1, 10);
         map.put(1, 15);  // update the value for key 1
 
@@ -35,6 +29,7 @@ class MyHashMapTest {
 
     @Test
     public void testRemove() {
+        MyHashMap map = new MyHashMap();
         map.put(1, 10);
         map.put(2, 20);
         map.put(3, 30);
@@ -53,6 +48,7 @@ class MyHashMapTest {
 
     @Test
     public void testRemoveNonExistingKey() {
+        MyHashMap map = new MyHashMap();
         map.put(1, 10);
         map.put(2, 20);
 
@@ -63,6 +59,7 @@ class MyHashMapTest {
 
     @Test
     public void testCollisionHandling() {
+        MyHashMap map = new MyHashMap();
         int hashTableSize = 1000000;
 
         // These keys will collide if the hash table size is 1000000
