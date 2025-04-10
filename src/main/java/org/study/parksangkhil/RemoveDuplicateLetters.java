@@ -45,4 +45,27 @@ public class RemoveDuplicateLetters {
 
         return sb.toString();
     }
+
+    // 개선된 메서드, 원시 자료형을 사용함으로 써 성능 개선
+    public String removeDuplicateLetters2(String s) {
+        int[] table = new int[26];
+        Deque<Character> stack = new ArrayDeque<>();
+        StringBuilder sb = new StringBuilder();
+
+        for (char c : s.toCharArray())
+            table[c - 97]++;
+
+        for (char c : s.toCharArray()) {
+            table[c - 97]--;
+            if (stack.contains(c)) continue;
+            while (!stack.isEmpty() && stack.peek() > c && table[stack.peek() - 97] > 0)
+                stack.poll();
+
+            stack.push(c);
+        }
+
+        while (!stack.isEmpty())
+            sb.append(stack.pollLast());
+        return sb.toString();
+    }
 }
