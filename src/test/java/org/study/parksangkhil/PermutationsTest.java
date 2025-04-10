@@ -34,7 +34,7 @@ class PermutationsTest {
     }
 
     @Test
-    void permut2() {
+    void permute2() {
         int[] nums = {1, 2, 3};
         List<List<Integer>> expected = new ArrayList<>();
         expected.add(Arrays.asList(1, 2, 3));
