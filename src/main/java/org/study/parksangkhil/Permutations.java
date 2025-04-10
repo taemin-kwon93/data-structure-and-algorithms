@@ -28,4 +28,27 @@ public class Permutations {
             System.out.println("remove e: " + e);
         }
     }
+
+    // 더 직관적이고 개선된 성능의 메서드 추가
+    public List<List<Integer>> permute2(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        boolean[] visited = new boolean[nums.length];
+        dfs2(result, nums, visited, new ArrayList<>());
+        return result;
+    }
+
+    private void dfs2(List<List<Integer>> result, int[] nums, boolean[] visited, List<Integer> path) {
+        if (path.size() == nums.length) {
+            result.add(new ArrayList<>(path));
+            return;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (visited[i]) continue;
+            path.add(nums[i]);
+            visited[i] = true;
+            dfs2(result, nums, visited, path);
+            path.remove(path.size() - 1);
+            visited[i] = false;
+        }
+    }
 }
