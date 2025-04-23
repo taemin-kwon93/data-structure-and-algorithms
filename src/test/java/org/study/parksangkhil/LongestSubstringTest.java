@@ -18,21 +18,10 @@ class LongestSubstringTest {
     @CsvSource({
             "'abcabcbb', 3",
             "'bbbbb', 1",
-            "'pwwkew', 3" // failed
+            "'pwwkew', 3"
     })
     void solution(String s, int expected) {
         int result = longestSubstring.solution(s);
-        assertEquals(expected, result);
-    }
-
-    @ParameterizedTest
-    @CsvSource({
-            "'abcabcbb', 3",
-            "'bbbbb', 1",
-            "'pwwkew', 3"
-    })
-    void solutionB(String s, int expected) {
-        int result = longestSubstring.solutionB(s);
         assertEquals(expected, result);
     }
 }
