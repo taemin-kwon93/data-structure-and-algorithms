@@ -4,31 +4,40 @@ import java.util.*;
 
 public class CourseSchedule {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        Map<Integer, List<Integer>> finishToTakeMap = new HashMap<>();
-        for (int[] pre : prerequisites) {
-            finishToTakeMap.put(pre[0], new ArrayList<>());
-            finishToTakeMap.get(pre[0]).add(pre[1]);
+        Map<Integer, List<Integer>> map = new HashMap<>();
+
+        // 그래프 생성
+        for (int[] arr : prerequisites) {
+            map.putIfAbsent(arr[1], new ArrayList<>());
+            map.get(arr[1]).add(arr[0]);
         }
-        List<Integer> takes = new ArrayList<>();
-        for (Integer finish : finishToTakeMap.keySet()) {
-            if (!dfs(finishToTakeMap, finish, takes)) return false;
+
+        boolean[] visited = new boolean[numCourses];
+        boolean[] visiting = new boolean[numCourses];
+
+        // 모든 과목에 대해 탐색
+        for (int i = 0; i < numCourses; i++) {
+            if (!dfs(map, i, visited, visiting)) return false;
         }
 
         return true;
     }
 
-    public boolean dfs(Map<Integer, List<Integer>> finishToTakeMap,
-                       Integer finish,
-                       List<Integer> takes) {
-        if (takes.contains(finish)) return false;
-        if (finishToTakeMap.containsKey(finish)) {
-            takes.add(finish);
-            for (Integer take : finishToTakeMap.get(finish)) {
-                if (!dfs(finishToTakeMap, take, takes))
-                    return false;
-                takes.remove(finish);
+    public boolean dfs(Map<Integer, List<Integer>> map, int from, boolean[] visited, boolean[] visiting) {
+        if (visited[from]) return true;
+        if (visiting[from]) return false; // 사이클 발생
+
+        visiting[from] = true;
+
+        if (map.containsKey(from)) {
+            for (int to : map.get(from)) {
+                if (!dfs(map, to, visited, visiting)) return false;
             }
         }
+
+        visiting[from] = false;
+        visited[from] = true;
+
         return true;
     }
 }
