@@ -4,39 +4,44 @@ import java.util.*;
 
 public class NetworkDelayTime {
     public int networkDelayTime(int[][] times, int n, int k) {
-        Map<Integer, Map<Integer, Integer>> graph = new HashMap<>();
+        Map<Integer, List<int[]>> graph = new HashMap<>();
         for (int[] time : times) {
-            graph.putIfAbsent(time[0], new HashMap<>());
-            graph.get(time[0]).put(time[1], time[2]);
+            graph.computeIfAbsent(time[0], x -> new ArrayList<>()).add(new int[]{time[1], time[2]});
         }
 
-        Queue<Map.Entry<Integer, Integer>> pq = new PriorityQueue<>(
-                AbstractMap.Entry.comparingByValue());
-        pq.add(new AbstractMap.SimpleEntry<>(k, 0));
+        int[] dist = new int[n + 1];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[k] = 0;
 
-        Map<Integer, Integer> dist = new HashMap<>();
+        PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(a -> a[1]));
+        pq.offer(new int[]{k, 0});
 
+        // Dijkstra's algorithm
+        // Using a priority queue to get the node with the smallest distance
+        // and updating the distances to its neighbors
+        // until all nodes are processed or the queue is empty
+        // The time complexity is O((V + E) log V), where V is the number of vertices and E is the number of edges
+        // The space complexity is O(V + E) for the graph and O(V) for the distance array
         while (!pq.isEmpty()) {
-            Map.Entry<Integer, Integer> cur = pq.poll();
-            int u = cur.getKey();
-            int dist_u = cur.getValue();
+            int[] curr = pq.poll();
+            int node = curr[0], time = curr[1];
 
-            if (!dist.containsKey(u)) {
-                dist.put(u, dist_u);
-                if (graph.containsKey(u)) {
-                    for (Map.Entry<Integer, Integer> v : graph.get(u).entrySet()) {
-                        int alt = dist_u + v.getValue();
-                        pq.add(new AbstractMap.SimpleEntry<>(v.getKey(), alt));
-                    }
+            if (!graph.containsKey(node)) continue;
+
+            for (int[] neighbor : graph.get(node)) {
+                int next = neighbor[0], cost = neighbor[1];
+                if (dist[next] > time + cost) {
+                    dist[next] = time + cost;
+                    pq.offer(new int[]{next, dist[next]});
                 }
             }
         }
 
-        if (dist.size() == n) {
-            return Collections.max(dist.values());
+        int max = 0;
+        for (int i = 1; i <= n; i++) {
+            if (dist[i] == Integer.MAX_VALUE) return -1;
+            max = Math.max(max, dist[i]);
         }
-
-
-        return -1;
+        return max;
     }
 }
