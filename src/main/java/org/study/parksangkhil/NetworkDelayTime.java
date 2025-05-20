@@ -32,6 +32,8 @@ public class NetworkDelayTime {
 
             for (int[] neighbor : graph.get(node)) {
                 int next = neighbor[0], cost = neighbor[1];
+                // The core of Dijkstra’s algorithm is edge relaxation—only update a node’s distance
+                // (and re-insert it into the priority queue) when you’ve found a strictly shorter path.
                 if (dist[next] > time + cost) {
                     dist[next] = time + cost;
                     pq.offer(new int[]{next, dist[next]});
