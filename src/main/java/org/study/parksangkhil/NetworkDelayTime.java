@@ -19,9 +19,8 @@ public class NetworkDelayTime {
         pq.offer(new int[]{k, 0});
 
         // Dijkstra's algorithm
-        // Using a priority queue to get the node with the smallest distance
-        // and updating the distances to its neighbors
-        // until all nodes are processed or the queue is empty
+        // Using a priority queue to get the node with the smallest distance and
+        // updating the distances to its neighbors until all nodes are processed or the queue is empty
         // The time complexity is O((V + E) log V), where V is the number of vertices and E is the number of edges
         // The space complexity is O(V + E) for the graph and O(V) for the distance array
         while (!pq.isEmpty()) {
