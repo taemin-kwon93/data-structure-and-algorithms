@@ -6,9 +6,11 @@ public class NetworkDelayTime {
     public int networkDelayTime(int[][] times, int n, int k) {
         Map<Integer, List<int[]>> graph = new HashMap<>();
         for (int[] time : times) {
-            graph.computeIfAbsent(time[0], x -> new ArrayList<>()).add(new int[]{time[1], time[2]});
+            // from 'u'(source vertex) to 'v'(destination vertex) and 'w'(weight)
+            graph.computeIfAbsent(time[0], a -> new ArrayList<>()).add(new int[] {time[1], time[2]});
         }
 
+        // distance values from k
         int[] dist = new int[n + 1];
         Arrays.fill(dist, Integer.MAX_VALUE);
         dist[k] = 0;
