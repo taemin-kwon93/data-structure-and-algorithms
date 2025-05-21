@@ -15,14 +15,13 @@ public class NetworkDelayTime {
         Arrays.fill(dist, Integer.MAX_VALUE);
         dist[k] = 0;
 
-        PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(a -> a[1]));
-        pq.offer(new int[]{k, 0});
-
         // Dijkstra's algorithm
         // Using a priority queue to get the node with the smallest distance and
         // updating the distances to its neighbors until all nodes are processed or the queue is empty
         // The time complexity is O((V + E) log V), where V is the number of vertices and E is the number of edges
         // The space complexity is O(V + E) for the graph and O(V) for the distance array
+        PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(a -> a[1]));
+        pq.offer(new int[]{k, 0});
         while (!pq.isEmpty()) {
             int[] curr = pq.poll();
             int node = curr[0], time = curr[1];
