@@ -7,38 +7,35 @@ public class MinimumHeightTrees {
         if (n == 1) return new ArrayList<>(Arrays.asList(0));
 
         List<Integer> result = new ArrayList<>();
+        List<List<Integer>> graph = new ArrayList<>();
         int[] indegree = new int[n];
 
-        List<List<Integer>> adj = new ArrayList<>();
         for (int i = 0; i < n; i++) {
-            adj.add(new ArrayList<>());
+            graph.add(new ArrayList<>());
         }
 
-        for(int[] ed:edges){
-            adj.get(ed[0]).add(ed[1]);
-            adj.get(ed[1]).add(ed[0]);
+        for (int[] ed : edges) {
+            graph.get(ed[0]).add(ed[1]);
+            graph.get(ed[1]).add(ed[0]);
             indegree[ed[0]]++;
             indegree[ed[1]]++;
         }
 
         Queue<Integer> q = new LinkedList<>();
-
-        for(int i = 0; i < n; i++){
-            if(indegree[i] == 1){
-                q.add(i);
-            }
+        for (int i = 0; i < n; i++) {
+            if (indegree[i] == 1) q.add(i);
         }
 
-        while(n > 2){
+        while (n > 2){
             int size = q.size();
-            n = n - size;
+            n -= size;
 
-            for(int i = 0; i < size; i++){
+            for (int i = 0; i < size; i++) {
                 int leaf = q.poll();
 
-                for(int x : adj.get(leaf)) {
+                for (int x : graph.get(leaf)) {
                     indegree[x]--;
-                    if(indegree[x] == 1) q.add(x);
+                    if (indegree[x] == 1) q.add(x);
                 }
             }
         }
