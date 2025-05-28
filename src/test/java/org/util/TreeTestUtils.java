@@ -29,7 +29,7 @@ public class TreeTestUtils {
                 break;
             }
 
-            if (i < arr.length && arr[i] != null) {
+            if (arr[i] != null) {
                 node.left = new TreeNode(arr[i]);
                 queue.offer(node.left);
             }
