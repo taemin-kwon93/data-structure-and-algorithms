@@ -60,4 +60,31 @@ public class TreeTestUtils {
         }
         return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
     }
+
+    /**
+     * TreeNode to List conversion.
+     */
+    public static List<Integer> treeToList(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            if (node != null) {
+                result.add(node.val);
+                queue.offer(node.left);
+                queue.offer(node.right);
+            } else {
+                result.add(null);
+            }
+        }
+        // Remove trailing nulls
+        while (!result.isEmpty() && result.get(result.size() - 1) == null) {
+            result.remove(result.size() - 1);
+        }
+        return result;
+    }
 }
