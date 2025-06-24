@@ -1,6 +1,6 @@
 package org.study.algorithm;
 
-public class SumOfTwoNumbers {
+public class SumOfTwoIntegers {
     public String solution(String a, String b) {
         StringBuilder result = new StringBuilder();
 
